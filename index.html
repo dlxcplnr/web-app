@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style__mobilefirst__LR6.css">
+    <title class="page-title">CoffeeMood</title>
+</head>
+<script src="js/script.js"></script>
+<body>
+    <header>
+    	<div class="header_row">
+            <h1 class="logo-title">CoffeeMood</h1>
+            <p class="header-description">
+                Мінімалістична кав’ярня зі свіжою кавою та десертами
+            </p>
+        </div>
+
+            <nav class="navigation">
+                <ul class="nav-list">
+                <li class="nav-item"><a href="#">Головна</a></li>
+                    <li class="nav-item"><a href="about.html">Про нас</a></li>
+                    <li class="nav-item"><a href="contacts.html">Контакти</a></li>
+                </ul>
+            </nav>
+    </header>
+
+    <main>
+    	<div class="container">
+    	<h2 class="section-title">Меню</h2>
+       	<section class="menu">
+                    <article class="menu-card">
+                        <h3 class="menu-title">Еспресо</h3>
+                        <p class="menu-description">Класичний міцний напій</p>
+                        <p class="menu-price">60 грн</p>
+                        <img src="img/espresso_select.png">
+                        <a onclick="select_order_item('espresso')">Отримати</a>
+                        </article>
+
+                    <article class="menu-card">
+                        <h3 class="menu-title">Капучино</h3>
+                        <p class="menu-description">Еспресо з молочною пінкою</p>
+                        <p class="menu-price">85 грн</p>
+                        <img src="img/capuccino_select.png">
+                        <a onclick="select_order_item('capuccino')">Отримати</a>
+                    </article>
+
+                    <article class="menu-card">
+                        <h3 class="menu-title">Чізкейк</h3>
+                        <p class="menu-description">Відмінно смакує до кави</p>
+                        <p class="menu-price">85 грн</p>
+                        <img src="img/cake_select.png">
+                        <a onclick="select_order_item('cheesecake')">Отримати</a>
+                    </article>
+					<a class="load-more-btn" onclick="Download_new_article()">Відкрити ще</a>                   
+        </section>
+
+        <section id="hidden_order_btn" style="display: none;"><br>
+    		<h2>Підрахунок замовлення</h2>
+        	<div id="order"></div>
+        	<a href="#placing_an_order">Замовити</a>
+        	<div class="calculator">
+		</div><br>
+        </section>
+
+				<h2 class="section-title" id="placing_an_order">Оформлення замовлення</h2>
+        <section class="order">
+                <p class="order-text">
+                    Залиште свої контактні дані для підтвердження замовлення.
+                </p>            
+                <form method="POST" class="order-form">
+                	<label>Ім'я*</label>
+                	<input type="text" name="name">
+                	<label>Номер телефону*</label>
+                	<input type="text" name="phone">
+                	<label>Код про сплату рахунку*</label>
+                	<input type="text" name="code_bought">
+                	<label>ел.пошта*</label>
+                	<input type="text" name="email">
+                	<button type="submit" class="form_btn">Відправити</button>
+                </form>
+                <div id="message"></div>
+        </section>
+    	</div>
+    </main>
+
+    <footer>
+    	<div>
+    		<p class="footer-text">м. Дніпро, вул. Центральна, 10</p>
+            <p class="footer-text">+38 (000) 000 00 00</p>
+            <p class="footer-copy">© 2026 CoffeeMood</p>
+        </div>
+    </footer>
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+
+    const form = document.querySelector('.order-form');
+    if (!form) return;
+
+    const messageBox = document.querySelector('#message');
+
+    // --- helpers ---
+    function isEmailValid(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function isPhoneValid(phone) {
+        return /^\+38\d{10}$/.test(phone);
+    }
+
+    function setFieldState(field, isOk) {
+        if (!field) return;
+        field.style.borderColor = isOk ? '#d9d9d9' : 'crimson';
+    }
+
+    function validate(values) {
+        if (values.name.length < 2) return "Ім'я має містити мінімум 2 символи";
+        if (!isPhoneValid(values.phone)) return "Телефон має бути у форматі +380XXXXXXXXX";
+        if (values.buy.length < 3) return "Код рахунку занадто короткий";
+        if (!isEmailValid(values.email)) return "Вкажіть коректний email";
+        return null;
+    }
+
+    function checkForm(values) {
+
+        const nameInput = form.querySelector('[name="name"]');
+        const phoneInput = form.querySelector('[name="phone"]');
+        const buyInput = form.querySelector('[name="code_bought"]');
+        const emailInput = form.querySelector('[name="email"]');
+
+        setFieldState(nameInput, values.name.length >= 2);
+        setFieldState(phoneInput, isPhoneValid(values.phone));
+        setFieldState(buyInput, values.buy.length >= 3);
+        setFieldState(emailInput, isEmailValid(values.email));
+
+        const error = validate(values);
+
+        if (messageBox) {
+            messageBox.textContent = error || "";
+            messageBox.style.color = error ? "crimson" : "green";
+        }
+
+        return !error;
+    }
+
+    // --- submit ---
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const values = {
+            name: form.querySelector('[name="name"]').value.trim(),
+            phone: form.querySelector('[name="phone"]').value.trim(),
+            buy: form.querySelector('[name="code_bought"]').value.trim(),
+            email: form.querySelector('[name="email"]').value.trim()
+        };
+
+        if (!checkForm(values)) return;
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch('api/order.php', {
+                method: 'POST',
+                body: formData
+            });
+
+   //          const text = await response.text();
+			// console.log(text);
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                if (messageBox) {
+                    messageBox.textContent = data.message;
+                    messageBox.style.color = 'green';
+                }
+                form.reset();
+            } else {
+                if (messageBox) {
+                    messageBox.textContent = data.errors?.join('\n') || 'Помилка';
+                    messageBox.style.color = 'crimson';
+                }
+            }
+
+        } catch (err) {
+            console.error(err);
+            if (messageBox) {
+                messageBox.textContent = 'Помилка відправки форми';
+                messageBox.style.color = 'crimson';
+            }
+        }
+    });
+
+}); 	
+    </script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+* {
+	box-sizing: border-box;
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+/*	padding-left: 20%;*/
+	column-gap: 20px;
+}
+
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+	line-height: 1.5;
+	color: #242424;
+	background: #ffffff;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+	display: block;
+}
+
+.container {
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 0 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+section {
+	padding: 40px 0;
+}
+
+h1, h2, h3 {
+	margin: 0 0 12px;
+	line-height: 1.2;
+}
+
+p {
+	margin: 0 0 12px;
+	opacity: 0.9;
+}
+
+/*navigation*/
+header {
+	padding: 18px 0;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.logo-title {
+	font-size: 22px;
+}
+
+.nav-list a {
+	padding: 8px 10px;
+	border-radius: 8px;
+}
+
+.nav-list a:hover {
+	background: #f2f2f2;
+}
+
+/*cards*/
+.menu-card {
+	border: 1px solid #e6e6e6;
+	border-radius: 16px;
+	padding: 16px;
+	background: #fff;
+	/*для перехода чтоб контейнер по размеру*/
+/*	container-type: inline-size;
+		border: 3px solid red;*/
+}
+
+/*@container (max-width: 290px) {
+	.text-menu {
+		flex-direction: column;
+				border: 3px solid blue;
+	}
+}*/
+
+/*оно самое обычное состояние*/
+.text-menu {
+	display: flex;
+	flex-direction: column;
+	column-gap: 10px;
+}
+
+.menu-title {
+	font-size: 18px;
+	margin-bottom: 8px;
+}
+
+.menu-description {
+	opacity: 0.8;
+}
+
+.section-title {
+	align-self: center;
+	/*margin-left: 45%;*/
+	margin-top: 40px;
+}
+
+/*btns*/
+.form_btn {
+	display: inline-block;
+	padding: 10px 14px;
+	border-radius: #242424;
+	color: #fff;
+	cursor: pointer;
+}
+
+.form_btn:hover {
+	opacity: 0.9;
+}
+
+/*form*/
+form {
+	max-width: 520px;
+}
+
+form input {
+	width: 100%;
+	padding: 10px 12px;
+	border: 1px solid #d9d9d9;
+	border-radius: 10px;
+	margin-bottom: 10px;
+}
+
+form input:focus {
+	outline: none;
+	border-color: #242424;
+}
+
+/*flexbox ---*/
+.header_row {
+	display: flex;
+	/*align-items: center;
+	justify-content: space-between;
+	gap: : 16px;*/
+	flex-direction: column;
+	gap: 10px;
+}
+
+.nav-list{
+	display: flex;
+/*	gap: 10px;
+	flex-wrap: wrap;*/
+	flex-direction: column;
+	gap: 8px;
+/* deleting list default styles*/
+	list-style: none;
+	padding: 0;
+}
+
+.menu {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 600px;
+	max-height: 500px;
+	overflow-y: auto;
+	border: 1px solid #ccc;
+	align-items: stretch;
+}
+
+.load-more-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 80px;
+	cursor: pointer;
+}
+
+/*.block_load-more-btn {
+	display: flex;
+	height: 20px;
+	width: 40px;
+	flex-direction: row;
+	align-items: center
+}*/
+
+.menu-card {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 16px;
+	width: 100%;
+}
+
+.menu-card img {
+	width: 100%;
+	max-width: 200px;
+	height: auto;
+	display: block;
+}
+
+@media (min-width: 768px) {
+	.header_row {
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.menu {
+		flex-direction: row;
+		flex-wrap: wrap;
+		/*dod*/
+	}
+
+	.nav-list {
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
+	.menu-card {
+    	display: grid;
+    	grid-template-columns: repeat(1, 1fr);
+   		justify-items: center; /* по горизонталі */
+    	align-items: center;   /* по вертикалі */
+    	text-align: center;    /* для тексту */
+	}
+
+	.nav-item a {
+		padding: 10px;
+		border-radius: 8px;
+		background: #f2f2f2;
+	}
+}
+
+form {
+	max-width: 100%;
+}
+
+@media (min-width: 768px) {
+	form {
+		max-width: 500px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.menu-card {
+		grid-template-columns: repeat(1, 1fr);
+	}
+
+	.nav-list {
+		gap: 24px;
+	}
+
+	.menu-card {
+		flex: 1 1 280px;
+	}
+}
+
+footer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	column-gap: 10px
+}
+
+header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	column-gap: 10px;
+}
+
+/* contacts.html */
+
+aside {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}

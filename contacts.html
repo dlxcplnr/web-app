@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style__mobilefirst__LR6.css">
+    <title class="page-title">CoffeeMood</title>
+</head>
+<script src="js/script.js"></script>
+<body>
+    <header>
+        <div class="header_row">
+            <h1 class="logo-title">CoffeeMood</h1>
+            <p class="header-description">
+                Мінімалістична кав’ярня зі свіжою кавою та десертами
+            </p>
+        </div>
+            <nav class="navigation">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html">Головна</a></li>
+                    <li class="nav-item"><a href="about.html">Про нас</a></li>
+                    <li class="nav-item"><a href="#">Контакти</a></li>
+                </ul>
+            </nav>
+    </header>
+
+    <main>
+        <div class="container">
+        <section class="contacts">
+                <h2 class="section-title">Ми у соцмережах</h2>
+                <p class="contacts-text">
+                    Зустрічайте кав'ярню CoffeeMood у Instagram, Twitter та Facebook
+                    
+                </p>
+        </section>
+        <section>
+            <form class="contact-form">
+                <label>
+                    Ім'я
+                    <input class="name_input" type="text" name="name" placeholder="Baшe iм'я">
+                </label>
+                <label>
+                    Email
+                    <input class="email_input" type="email" name="email" placeholder="name@example">
+                </label>
+                <label>
+                    Повідомлення
+                </label>
+                <textarea class="message_input"
+                   name="message" rows="4" placeholder="Ваше повідомлення"></textarea>
+                <button type="submit">Надіслати</button>
+            </form>
+            <br><br><p class="form-message"></p>
+        </section>
+        </div>
+    </main>
+
+    <aside>
+    <p>
+        За пропозиціями та оцінками кав'ярні чекаємо Вас за даною формою.
+    </p>
+    </aside>
+
+    <footer>
+            <p class="footer-text">м. Дніпро, вул. Центральна, 10</p>
+            <p class="footer-text">+38 (000) 000 00 00</p>
+            <p class="footer-copy">© 2026 CoffeeMood</p>
+    </footer>
+    <script type="text/javascript">
+document.addEventListener('DOMContentLoaded', () => {
+
+    const form = document.querySelector('.contact-form');
+
+    // --- helpers ---
+    function isEmailValid(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function validateForm(values) {
+        if (values.name.length < 2) return "Iм'я має містити мінімум 2 символи";
+        if (!isEmailValid(values.email)) return "Вкажіть коректний email";
+        if (values.message.length < 10) return "Повідомлення має містити мінімум 10 символів";
+        return null;
+    }
+
+    function setFieldState(field, isOk) {
+        field.style.borderColor = isOk ? '#d9d9d9' : 'crimson';
+    }
+
+    // --- основная валидация ---
+    function checkupForm() {
+        const values = {
+            name: form.name.value.trim(),
+            email: form.email.value.trim(),
+            message: form.message.value.trim()
+        };
+
+        const name_input = document.querySelector('.name_input');
+        const email_input = document.querySelector('.email_input');
+        const message_input = document.querySelector('.message_input');
+
+        setFieldState(name_input, values.name.length >= 2);
+        setFieldState(email_input, isEmailValid(values.email));
+        setFieldState(message_input, values.message.length >= 10);
+
+        const error = validateForm(values);
+        document.querySelector('.form-message').textContent = error || "";
+
+        return !error; // возвращаем true/false
+    }
+
+    // --- submit ---
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // 1. валидация
+        if (!checkupForm()) return;
+
+        // 2. отправка
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch('api/contact.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                alert(data.message);
+                form.reset();
+            } else {
+                alert(data.errors.join('\n'));
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert('Помилка відправки форми');
+        }
+    });
+
+});
+    </script>
+</body>
+</html>
