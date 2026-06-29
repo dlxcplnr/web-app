@@ -10,3 +10,5 @@ deploy_to_server:
     - sudo docker compose up -d --build
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
+  tags:
+    - docker-deploy
