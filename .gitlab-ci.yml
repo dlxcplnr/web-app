@@ -4,8 +4,13 @@ stages:
 deploy_to_server:
   stage: deploy
   script:
+    # 1. Переходимо в папку
     - cd /home/gitlab-admin/my-web-app || cd ~/my-web-app
+    # 2. Перезаписуємо шлях Git, вшиваючи туди наш токен доступу
+    - git remote set-url origin http://oauth2:glpat-sDe4uTjFjFtQjaP1jL_fOm86MQp1OjMH.01.0w1o2m5ek@192.168.0.3/devops/my-web-app.git
+    # 3. Тепер pull пройде автоматично і без паролів!
     - git pull origin main
+    # 4. Перезапускаємо Docker
     - sudo docker compose down
     - sudo docker compose up -d --build
   rules:
