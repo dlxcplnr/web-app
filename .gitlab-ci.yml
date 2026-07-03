@@ -1,0 +1,27 @@
+stages:
+  - deploy
+
+deploy_to_server:
+  stage: deploy
+  script:
+    # 1. Дозволяємо роботу з папкою
+    - git config --global --add safe.directory /home/gitlab-admin/my-web-app
+    # 2. Переходимо в папку
+    - cd /home/gitlab-admin/my-web-app || cd ~/my-web-app
+    # 3. Перезаписуємо шлях Git
+    - git remote set-url origin http://oauth2:glpat-sDe4uTjFjFtQjaP1jL_fOm86MQp1OjMH.01.0w1o2m5ek@192.168.0.3/devops/my-web-app.git
+    # 4. Скасовуємо будь-які локальні конфліктні зміни на сервері
+    - git fetch --all
+    - git reset --hard origin/main
+    # ... (усі попередні рядки з safe.directory, токеном і git reset залишаються як були)
+    # 5. Оновлюємо код
+    - git pull origin main
+    # 6. Міняємо конфліктний порт 8080 на вільний 8081 у файлі докера
+    - sed -i 's/8080:80/8081:80/g' docker-compose.yml
+    # 7. Перезапускаємо Docker
+    - sudo docker compose down
+    - sudo docker compose up -d --build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  tags:
+    - docker-deploy
