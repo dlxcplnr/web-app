@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         field.style.borderColor = isOk ? '#d9d9d9' : 'crimson';
     }
 
-    // --- основная валидация ---
+    // --- main validation ---
     function checkupForm() {
         const values = {
             name: form.name.value.trim(),
@@ -105,17 +105,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const error = validateForm(values);
         document.querySelector('.form-message').textContent = error || "";
 
-        return !error; // возвращаем true/false
+        return !error; // return true/false
     }
 
     // --- submit ---
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // 1. валидация
+        // 1. validation
         if (!checkupForm()) return;
 
-        // 2. отправка
+        // 2. sending
         const formData = new FormData(form);
 
         try {

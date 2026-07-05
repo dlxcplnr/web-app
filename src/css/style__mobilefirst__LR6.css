@@ -75,7 +75,7 @@ header {
 	border-radius: 16px;
 	padding: 16px;
 	background: #fff;
-	/*для перехода чтоб контейнер по размеру*/
+	/*for switching to container by size*/
 /*	container-type: inline-size;
 		border: 3px solid red;*/
 }
@@ -87,7 +87,7 @@ header {
 	}
 }*/
 
-/*оно самое обычное состояние*/
+/*that usual start state*/
 .text-menu {
 	display: flex;
 	flex-direction: column;
@@ -224,9 +224,9 @@ form input:focus {
 	.menu-card {
     	display: grid;
     	grid-template-columns: repeat(1, 1fr);
-   		justify-items: center; /* по горизонталі */
-    	align-items: center;   /* по вертикалі */
-    	text-align: center;    /* для тексту */
+   		justify-items: center; /* by width */
+    	align-items: center;   /* by height */
+    	text-align: center;    /* for text */
 	}
 
 	.nav-item a {

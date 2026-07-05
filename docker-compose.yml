@@ -1,7 +1,7 @@
 #version: '3.8'
 
 services:
-# 0 - PhpmyAdmin for GUI importing existing DB from MAMP
+  # 0 - PhpmyAdmin for GUI importing existing DB from MAMP
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: web_pma
@@ -14,7 +14,7 @@ services:
     depends_on:
       - db
 
-  # 1. Веб-сервер Nginx (слухає порт 8080 на твоєму ПК)
+  # 1. Web-server Nginx (listening on 8081)
   web:
     image: nginx:alpine
     container_name: web_nginx
@@ -26,7 +26,7 @@ services:
     depends_on:
       - php
 
-  # 2. Обробник PHP (інтерпретатор)
+  # 2. PHP Interpreter
   php:
     image: php:8.2-fpm-alpine
     container_name: web_php
@@ -41,7 +41,7 @@ services:
     volumes:
       - ./:/var/www/html
 
-  # 3. База даних MySQL
+  # 3. Data Base MySQL
   db:
     image: mysql:8.0
     container_name: web_db
@@ -55,9 +55,9 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       
-  # Нове, Prometheus + Grafana
+  # Prometheus + Grafana
 
-  # 4. Агент, який збирає метрики з "заліза" Ubuntu
+  # 4. Agent that collect metrics data from gitlab-vm
   node-exporter:
     image: prom/node-exporter:latest
     container_name: node-exporter
@@ -71,7 +71,7 @@ services:
       - '--path.rootfs=/rootfs'
     restart: unless-stopped
 
-  # 5. База даних Prometheus, яка ці метрики накопичує
+  # 5. Data Base Prometheus, that gathering metrics
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -81,7 +81,7 @@ services:
       - "9091:9090"
     restart: unless-stopped
 
-  # 6. Grafana — панель для малювання графіків
+  # 6. Grafana - panel for visualising metrics
   grafana:
     image: grafana/grafana:latest
     container_name: grafana

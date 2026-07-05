@@ -1,7 +1,7 @@
 global:
-  scrape_interval: 5s # Як часто збирати метрики
+  scrape_interval: 5s # collect metrics frequently
 
 scrape_configs:
   - job_name: 'ubuntu-metrics'
     static_configs:
-      - targets: ['node-exporter:9100'] # Звідки тягнути дані
+      - targets: ['node-exporter:9100'] # Where to pull data from

@@ -6,7 +6,7 @@ header("Content-Type: application/json");
 
 require_once 'create_order.php';
 
-// Сбор данных (ВАЖНО: имена как в JS)
+// Gathering Data (Important: Names as in JS)
 $name  = trim($_POST['name'] ?? '');
 $phone = trim($_POST['phone'] ?? '');
 $code  = trim($_POST['code_bought'] ?? '');
@@ -14,7 +14,7 @@ $email = trim($_POST['email'] ?? '');
 
 $error = "";
 
-// --- серверная валидация (как в JS) ---
+// --- server validation ---
 if (strlen($name) < 2) {
     $error .= " Ім'я має містити мінімум 2 символи.";
 }
@@ -31,7 +31,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $error .= " Вкажіть коректний email.";
 }
 
-// --- выполнение ---
+// --- performing ---
 if ($error === "") {
 
     if (createOrder($name, $phone, $code, $email)) {

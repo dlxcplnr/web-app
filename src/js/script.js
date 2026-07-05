@@ -12,14 +12,14 @@ function Download_new_article() {
 
     const menuSection = document.querySelector(".menu");
 
-    // 1. Видаляємо кнопку
+    // 1. Deleting the button
     const oldBtn = document.querySelector(".load-more-btn");
     if (oldBtn) {
         oldBtn.remove();
     }
 
-    //// !!!! UVAGA OTUT ZAPIT NA OTRIMANNYA objectu - pochatok
-    // Дані
+    //// !!!! Attention! There request for giving Object - start
+    // Data
     const cheesecake = {
         // title: "Чізкейк",
         // description: "Відмінно смакує до кави",
@@ -27,10 +27,10 @@ function Download_new_article() {
         img: "img/cake_select.png"
     };
 
-    // 2. Створюємо картку
+    // 2. making a card
     const card = document.createElement("article");
     card.classList.add("menu-card");
-    // Дані, включаючи ті, що з API
+    // Data, including those from API
     card.innerHTML = `
         <h3 class="menu-title">${posts[currentIndex].title}</h3>
         <p class="menu-description">${posts[currentIndex].description}</p>
@@ -39,34 +39,34 @@ function Download_new_article() {
         <a onclick="select_order_item('cheesecake')">Отримати</a>
     `;
 
-        //// !!!! UVAGA OTUT ZAPIT NA OTRIMANNYA objectu - cinec
+        //// !!!! Attention! There request for giving Object - end
 
     currentIndex++;
 
     menuSection.appendChild(card);
 
-    // 3. Створюємо кнопку заново
+    // 3. Creating button again
     const newBtn = document.createElement("a");
     newBtn.textContent = "Відкрити ще";
     newBtn.classList.add("load-more-btn");
 
-    // оскільки краще через addEventListener, аніж onclick
+    // Because better from addEventListener, than onclick
     newBtn.addEventListener("click", Download_new_article);
 
     menuSection.appendChild(newBtn);
 }
 
-// перелік товарів (продукт - ціна)
+// table of products (product - cost)
 const products = {
     espresso: { name: "Еспресо", price: 60 },
     capuccino: { name: "Капучино", price: 85 },
     cheesecake: { name: "Чизкейк", price: 85 }
 };
 
-// замовлення (пусте спочатку)
+// orders (void at start)
 let order = {};
 
-// додавання товару
+// adding a product
 function select_order_item(productKey) {
     const product = products[productKey];
     if (!product) return;
@@ -99,7 +99,7 @@ function calculateTotal() {
     return total;
 }
 
-/// вивід у блок Замовлення
+/// output to the block 'Orders'
 function renderOrder() {
     const container = document.getElementById("order");
     container.innerHTML = "";
@@ -113,7 +113,7 @@ function renderOrder() {
         container.appendChild(p);
     }
 
-    // результат
+    // result
     const total = calculateTotal();
 
     const totalP = document.createElement("p");
@@ -122,9 +122,9 @@ function renderOrder() {
     container.appendChild(totalP);
 }
 
-// переробив під магазин кави
+// remaked for online-cafe "Coffee mood"
 
-// API тестове
+// API for test
 
 async function loadPosts() {
     const loadbtn_info = document.querySelector('.load-more-btn');

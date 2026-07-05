@@ -1,10 +1,10 @@
 <?php
-$host = 'db';          # <-- Звертаємося до контейнера бази за його ім'ям з docker-compose
+$host = 'db';          # <-- We address the base container by its name with 'docker-compose'
 $dbname = 'coffee_mood';
 $username = 'root';
-$password = 'super_secret_password_123'; # <-- Вкажи той пароль, що в MYSQL_ROOT_PASSWORD!
+$password = 'super_secret_password_123'; # <-- the password that is in MYSQL_ROOT_PASSWORD!
 
-# Порт 3306 вказувати необов'язково, PDO візьме його за замовчуванням
+# Port 3306 is optional, PDO will take it by default
 $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8"; 
 
 try {

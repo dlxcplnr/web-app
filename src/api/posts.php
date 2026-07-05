@@ -8,7 +8,7 @@ require_once 'select_posts.php';
 
 $error = "";
 
-// --- выполнение ---
+// --- performing ---
 if ($error === "") {
 
     $products = getProducts();
